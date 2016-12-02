@@ -41,10 +41,10 @@ describe "TaskList" do
     my_tasklist.add_task(my_task)
     my_tasklist.add_task(my_task1)
     my_tasklist.add_task(my_task2)
-    expect(my_tasklist.show_completed).to be_a Array
-    expect(my_tasklist.show_completed.length).to eq 1
-    expect(my_tasklist.show_completed).to eq [my_task]
-    expect{my_task1.done = true}.to change{my_tasklist.show_completed}.from([my_task]).to([my_task, my_task1])
+    expect(my_tasklist.all_completed).to be_a Array
+    expect(my_tasklist.all_completed.length).to eq 1
+    expect(my_tasklist.all_completed).to eq [my_task]
+    expect{my_task1.done = true}.to change{my_tasklist.all_completed}.from([my_task]).to([my_task, my_task1])
   end
 
   it "can get incomplete tasks" do
@@ -56,10 +56,10 @@ describe "TaskList" do
     my_tasklist.add_task(my_task)
     my_tasklist.add_task(my_task1)
     my_tasklist.add_task(my_task2)
-    expect(my_tasklist.show_incomplete).to be_a Array
-    expect(my_tasklist.show_incomplete.length).to eq 2
-    expect(my_tasklist.show_incomplete).to eq [my_task1, my_task2]
-    expect{my_task1.done = true}.to change{my_tasklist.show_incomplete}.from([my_task1,my_task2]).to([my_task2])
+    expect(my_tasklist.all_incomplete).to be_a Array
+    expect(my_tasklist.all_incomplete.length).to eq 2
+    expect(my_tasklist.all_incomplete).to eq [my_task1, my_task2]
+    expect{my_task1.done = true}.to change{my_tasklist.all_incomplete}.from([my_task1,my_task2]).to([my_task2])
   end
 
   it "can add multiple DueDateTasks to TaskList" do
@@ -89,7 +89,7 @@ describe "TaskList" do
     my_tasklist.add_task(my_due_date_task3)
     my_tasklist.add_task(my_due_date_task4)
 
-    expect(my_tasklist.show_incomplete_due_today).to eq [my_due_date_task4]
+    expect(my_tasklist.incomplete_due_today).to eq [my_due_date_task4]
   end
 
   it "can sort list of incomplete item by due date" do
@@ -162,7 +162,7 @@ describe "TaskList" do
     my_anniversary3.next_anniversary_date
     my_anniversary4.next_anniversary_date
 
-    expect(my_tasklist.show_due_by_month).to eq [my_anniversary3, my_anniversary2, my_due_date_task4, my_anniversary4]
+    expect(my_tasklist.due_current_month).to eq [my_anniversary3, my_anniversary2, my_due_date_task4, my_anniversary4]
   end
 
   it "can list all incomplete by this month then those without due dates" do
@@ -195,7 +195,7 @@ describe "TaskList" do
     my_anniversary3.next_anniversary_date
     my_anniversary4.next_anniversary_date
 
-    expect(my_tasklist.show_all_incomplete_this_month).to eq [my_anniversary3, my_anniversary2, my_due_date_task4, my_anniversary4, my_task]
+    expect(my_tasklist.all_incomplete_this_month).to eq [my_anniversary3, my_anniversary2, my_due_date_task4, my_anniversary4, my_task]
   end
 
 

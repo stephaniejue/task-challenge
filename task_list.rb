@@ -2,48 +2,48 @@ require_relative 'anniversary'
 
 class TaskList
 
-  #@list will hold all Task, DueDateTasks, and Anniversary objects
+  #@task_list will hold all Task, DueDateTasks, and Anniversary objects
   def initialize
-    @list = []
+    @task_list = []
   end
 
-  #Adds object to @list based on user input 
+  #Adds object to @task_list based on user input
   def add_task(task)
-    @list << task
+    @task_list << task
   end
 
   #Getter method for tasks list
   def list
-    @list
+    @task_list
   end
 
   #Returns an array of all completed tasks
-  def show_completed
-    completed = []
-    @list.each do |task|
+  def all_completed
+    completed_tasks = []
+    @task_list.each do |task|
       if task.done?
-        completed << task
+        completed_tasks << task
       end
     end
-    completed
+    completed_tasks
   end
 
   #Returns an array of all incompleted tasks
-  def show_incomplete
-    incomplete = []
-    @list.each do |task|
+  def all_incomplete
+    incomplete_tasks = []
+    @task_list.each do |task|
       if !task.done?
-        incomplete << task
+        incomplete_tasks << task
       end
     end
-    incomplete
+    incomplete_tasks
   end
 
   #Returns an array where it is of class DueDateTask or Anniversary and is due today
-  #Uses show_incomplete method to get all incomplete tasks
-  def show_incomplete_due_today
+  #Uses all_incomplete method to get all incomplete tasks
+  def incomplete_due_today
     incomplete_due_today = []
-    show_incomplete.each do |task|
+    all_incomplete.each do |task|
       if (task.class == DueDateTask || task.class == Anniversary) && (task.due_date == Date.today)
         incomplete_due_today << task
       end
@@ -52,58 +52,61 @@ class TaskList
   end
 
   #Returns a sorted array with DueDateTasks objects by due date
-  #Uses show_incomplete method to get all incomplete tasks
+  #Uses all_incomplete method to get all incomplete tasks
   def sort_incomplete_by_due_date
-    sorted = []
-    show_incomplete.each do |task|
+    incomplete_tasks = []
+    all_incomplete.each do |task|
       if (task.class == DueDateTask || task.class == Anniversary)
-        sorted << task
+        incomplete_tasks << task
       end
     end
-    sorted.sort! do |a, b|
-      a.due_date <=> b.due_date
+
+    #'!' means that sort will update original array
+    incomplete_tasks.sort! do |a_task, b_task|
+      a_task.due_date <=> b_task.due_date
     end
 
-    sorted
+    incomplete_tasks
   end
 
   #Combines sorted list of objects with due dates and the remaining incomplete
-  #tasks using a union so that it only gets one of each item
+  #tasks using a union so that it only gets unique tasks
   def sort_all_incomplete
-    sort_incomplete_by_due_date | show_incomplete
+    sort_incomplete_by_due_date | all_incomplete
   end
 
   #Returns sorted array of incomplete tasks by due date for the current month
   #Uses sort_incomplete_by_due_date to get all incomplete tasks with DueDateTask
   #and Anniversary objects.
-  def show_due_by_month
-    due_by_month = []
-    sort_incomplete_by_due_date.each do |item|
-      if (item.due_date.month == Date.today.month)
-        due_by_month << item
+  def due_current_month
+    due_current_month = []
+    sort_incomplete_by_due_date.each do |task|
+      if (task.due_date.month == Date.today.month)
+        due_current_month << task
       end
     end
-    due_by_month.sort! do |a, b|
-      a.due_date <=> b.due_date
+    #'!' means that sort will update original array
+    due_current_month.sort! do |a_task, b_task|
+      a_task.due_date <=> b_task.due_date
     end
   end
 
-  #Returns a list of only incomplete Task objects
-  def show_incomplete_without_due_date
-    incomplete = []
-    @list.each do |task|
+  #Returns a list of only incomplete Task objects without due dates
+  def incomplete_without_due_date
+    incomplete_no_due_date = []
+    @task_list.each do |task|
       if (!task.done? && task.class == Task)
-        incomplete << task
+        incomplete_no_due_date << task
       end
     end
-    incomplete
+    incomplete_no_due_date
   end
 
   #Combines sorted list of DueDateTask and Anniversary objects by due date for
   #current month and Task objects(which have no due date value). Uses a union
   #to avoid having duplicate items
-  def show_all_incomplete_this_month
-    show_due_by_month | show_incomplete_without_due_date
+  def all_incomplete_this_month
+    due_current_month | incomplete_without_due_date
   end
 
 end
