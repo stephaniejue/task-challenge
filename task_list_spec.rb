@@ -75,11 +75,12 @@ describe "TaskList" do
 
   it "can list all the not completed items that are due today" do
     my_tasklist = TaskList.new
+    today = Date.today
     my_task = Task.new "Something"
     my_due_date_task1 = DueDateTask.new("Hw", 2012, 3, 4)
     my_due_date_task2 = DueDateTask.new("Jog", 2013, 3, 10)
     my_due_date_task3 = DueDateTask.new("Help", 2001, 5, 19)
-    my_due_date_task4 = DueDateTask.new("Learn", 2016, 12, 1)
+    my_due_date_task4 = DueDateTask.new("Learn", today.year, today.month, today.day)
 
     my_due_date_task2.done = true
     my_tasklist.add_task(my_task)
@@ -93,11 +94,12 @@ describe "TaskList" do
 
   it "can sort list of incomplete item by due date" do
     my_tasklist = TaskList.new
+    today = Date.today
     my_task = Task.new "Something"
     my_due_date_task1 = DueDateTask.new("Hw", 2012, 3, 4)
     my_due_date_task2 = DueDateTask.new("Jog", 2013, 3, 10)
     my_due_date_task3 = DueDateTask.new("Help", 2001, 5, 19)
-    my_due_date_task4 = DueDateTask.new("Learn", 2016, 12, 1)
+    my_due_date_task4 = DueDateTask.new("Learn", today.year, today.month, today.day)
 
     my_due_date_task2.done = true
     my_tasklist.add_task(my_task)
@@ -111,12 +113,13 @@ describe "TaskList" do
 
   it "can sort incomplete tasks in order of due date, then items without due date" do
     my_tasklist = TaskList.new
+    today = Date.today
     my_task = Task.new "Something"
     my_task1 = Task.new "Watch"
     my_due_date_task1 = DueDateTask.new("Hw", 2012, 3, 4)
     my_due_date_task2 = DueDateTask.new("Jog", 2013, 3, 10)
     my_due_date_task3 = DueDateTask.new("Help", 2001, 5, 19)
-    my_due_date_task4 = DueDateTask.new("Learn", 2016, 12, 1)
+    my_due_date_task4 = DueDateTask.new("Learn", today.year, today.month, today.day)
 
     my_due_date_task2.done = true
     my_tasklist.add_task(my_task)
@@ -131,10 +134,11 @@ describe "TaskList" do
 
   it "can list all incomplete due this month" do
     my_tasklist = TaskList.new
+    today = Date.today
     my_task = Task.new "Task without a due date"
     my_due_date_task1 = DueDateTask.new("First take due", 2016, 03, 01)
     my_due_date_task2 = DueDateTask.new("Second take due", 2016, 05, 01)
-    my_due_date_task3 = DueDateTask.new("Third take due", 2016, 12, 01)
+    my_due_date_task3 = DueDateTask.new("Third take due", today.year, today.month, today.day)
     my_due_date_task4 = DueDateTask.new("Fourth take due", 2016, 12, 20)
     my_anniversary1 = Anniversary.new("First anniversary due", 2015, 05, 20)
     my_anniversary2 = Anniversary.new("Second anniversary due", 2010, 12, 14)
@@ -163,10 +167,11 @@ describe "TaskList" do
 
   it "can list all incomplete by this month then those without due dates" do
     my_tasklist = TaskList.new
+    today = Date.today
     my_task = Task.new "Task without a due date"
     my_due_date_task1 = DueDateTask.new("First take due", 2016, 03, 01)
     my_due_date_task2 = DueDateTask.new("Second take due", 2016, 05, 01)
-    my_due_date_task3 = DueDateTask.new("Third take due", 2016, 12, 01)
+    my_due_date_task3 = DueDateTask.new("Third take due", today.year, today.month, today.day)
     my_due_date_task4 = DueDateTask.new("Fourth take due", 2016, 12, 20)
     my_anniversary1 = Anniversary.new("First anniversary due (last year)", 2015, 05, 20)
     my_anniversary2 = Anniversary.new("Second anniversary due (6 years ago)", 2010, 12, 14)

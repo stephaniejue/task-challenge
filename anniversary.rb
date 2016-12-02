@@ -16,8 +16,19 @@ class Anniversary < DueDateTask
     end
   end
 
+  #Setter method that updates @due_date for Anniversary object
+  #Runs next_anniversary_date to update due date based on today's date
+  def update_anniversary(year, month, day)
+    @year = year
+    @month = month
+    @day = day
+
+    @due_date = Date.new(@year, @month, @day)
+    next_anniversary_date
+  end
+
   #Shows title, done?, description, and anniversary date
-  def show_anniversary_info
+  def info_plus_anniversary
     next_anniversary_date
     "#{info} \nAnniversary: #{@due_date}"
   end
