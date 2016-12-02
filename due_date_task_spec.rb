@@ -16,8 +16,15 @@ describe "DueDateTask" do
     expect(my_due_date_task.due_date.class).to be Date
   end
 
+  it "can change due date" do
+    my_due_date_task = DueDateTask.new("Hw", 2015, 3, 1)
+    my_due_date_task.update_due_date(1999, 12, 5)
+    #Date.new ensures that it is a Date object
+    expect(my_due_date_task.due_date).to eq Date.new(1999, 12, 05)
+  end
+
   it "returns a due date" do
     my_due_date_task = DueDateTask.new("Hw", 2016, 12, 4)
-    expect(my_due_date_task.show_due_date).to eq "Title: Hw\nDescription: \nDone: false \nDue on: 2016-12-04"
+    expect(my_due_date_task.info_plus_due_date).to eq "Title: Hw\nDescription: \nDone: false \nDue on: 2016-12-04"
   end
 end

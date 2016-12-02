@@ -7,12 +7,12 @@ class TaskList
     @list = []
   end
 
-  #Adds all objects to @list
+  #Adds object to @list based on user input 
   def add_task(task)
     @list << task
   end
 
-  #Getter function for tasks list
+  #Getter method for tasks list
   def list
     @list
   end
